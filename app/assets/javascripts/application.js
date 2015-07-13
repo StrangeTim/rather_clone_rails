@@ -11,6 +11,20 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+$(function() {
+  $('.flash-wrapper').delay(1500).fadeOut(1500);
+
+  // $('.add_image').click(function() {
+  //   $('.add_image_form').toggle();
+  //   if ( $('.add_image').text() == "Hide Form") {
+  //     $('.add_image').text("Add Image");
+  //   } else {
+  //     $('.add_image').text("Hide Form");
+  //   }
+  // });
+});
