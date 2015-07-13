@@ -10,8 +10,12 @@ class QuestionsController < ApplicationController
 
   def create
     user = current_user
-    question = user.questions.new(question_params)
-    question.save
+    @question = user.questions.new(question_params)
+    @question.save
+    respond_to do |format|
+      format.html {redirect_to '/'}
+      format.js
+    end
   end
 
   def show
@@ -26,9 +30,14 @@ class QuestionsController < ApplicationController
   #
   # end
   #
-  # def destroy
-  #
-  # end
+  def destroy
+    @question = Question.find(params[:id])
+    @question.delete
+    respond_to do |format|
+      format.html {redirect_to '/'}
+      format.js
+    end
+  end
 
   private
 

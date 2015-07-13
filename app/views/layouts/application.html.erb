@@ -28,7 +28,7 @@
               <!-- <%# if current_user.admin? %>
                 Welcome admin, <i><%#= current_user.username %></i>! |
               <%# else %> -->
-                You are logged in as <i><%= link_to current_user.email, user_path(current_user) %></i>! |
+                <!-- You are logged in as <i><%#= link_to current_user.email, user_path(current_user) %></i>! | -->
               <!-- <%# end %> -->
 
               <%= link_to "Logout", destroy_user_session_path, method: :delete %>

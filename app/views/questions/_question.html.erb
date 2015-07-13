@@ -1,0 +1,7 @@
+<%= form_for question, remote: true do |f| %>
+  <hr>
+  Would you rather....
+  <br><br>
+  <%= question.option_1 %> or <%= question.option_2 %>?
+  <%= link_to "remove", question, method: :delete, data: {confirm: "Are you sure?"}, remote: true, class: "btn btn-danger btn-xs" %>
+<% end %>
