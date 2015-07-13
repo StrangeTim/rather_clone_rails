@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
 
   def index
     @questions = Question.all
+    @vote = Vote.new
   end
 
   def new
@@ -9,8 +10,12 @@ class QuestionsController < ApplicationController
   end
 
   def create
+    @vote = Vote.new
     user = current_user
     @question = user.questions.new(question_params)
+    # if vote count fails or errors, instead get vote count from votes table
+    @question.option_1_count = 0
+    @question.option_2_count = 0
     @question.save
     respond_to do |format|
       format.html {redirect_to '/'}
@@ -32,12 +37,18 @@ class QuestionsController < ApplicationController
   #
   def destroy
     @question = Question.find(params[:id])
-    @question.delete
-    respond_to do |format|
-      format.html {redirect_to '/'}
-      format.js
+    if @question.user_id == current_user.try(:id)
+      @question.delete
+      respond_to do |format|
+        format.html {redirect_to '/'}
+        format.js
+      end
+    else
+      flash[:alert] = "You do not have the appropriate permissions to control that action"
+      redirect_to '/'
     end
   end
+
 
   private
 
