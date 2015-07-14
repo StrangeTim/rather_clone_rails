@@ -1,1 +1,2 @@
-$('#questionVotes').append('flash[:notice] = "vote submitted"');
+$('#question<%= @question.id  %>').remove();
+$('#all_questions').append('<%= j render @question %>');
