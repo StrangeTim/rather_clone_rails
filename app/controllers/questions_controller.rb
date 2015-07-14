@@ -37,6 +37,7 @@ class QuestionsController < ApplicationController
   #
   def destroy
     @question = Question.find(params[:id])
+    @question_id = @question.id
     if @question.user_id == current_user.try(:id)
       @question.delete
       respond_to do |format|

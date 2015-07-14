@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   devise_for :users
   resources :questions do
     resources :votes, only: [:create, :edit, :update]
+    resources :comments, except: [:show, :index]
   end
 end

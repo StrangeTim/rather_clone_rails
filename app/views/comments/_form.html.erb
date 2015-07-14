@@ -1,0 +1,4 @@
+<%= bootstrap_form_for [@question, @comment], remote: true do |f| %>
+<%= f.text_field :text, placeholder: "Enter your comment here" %>
+<%= f.submit %>
+<% end %>

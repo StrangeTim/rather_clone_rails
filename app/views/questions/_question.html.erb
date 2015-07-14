@@ -1,47 +1,58 @@
 <div id="question<%= question.id %>">
-  <%= form_for question, remote: true do |f| %>
-    <hr>
-  <% end %>
-  <% if current_user %>
-    <% votedOn = question.votedOn(current_user.id, question) %>
-    <% if votedOn != false %>
+  <div class="clearfix"></div>
+  <hr>
+  <div class="col-sm-6">
+    <%= form_for question, remote: true do |f| %>
+    <% end %>
+    <% if current_user %>
+      <% votedOn = question.votedOn(current_user.id, question) %>
+      <% if votedOn != false %>
 
-      <h3>You said you would rather: </h3>
-      <span class="votedOn"> <%= votedOn %> </span><br><br>
+        <h3 style="margin-top:0px;">You said you would rather: </h3>
+        <span class="votedOn"> <%= votedOn %> </span><br><br>
 
-    <% else %>
-      Would you rather....
-      <br><br>
-      <%= form_for [question, @vote], remote:true do |f| %>
-        <%= f.hidden_field :question_id, value: question.id %>
-        <%= f.submit question.option_1, class: "btn btn-link" %>
-        or
-        <%= f.submit question.option_2, class: "btn btn-link" %>
+      <% else %>
+        Would you rather....
+        <br><br>
+        <%= form_for [question, @vote], remote:true do |f| %>
+          <%= f.hidden_field :question_id, value: question.id %>
+          <%= f.submit question.option_1, class: "btn btn-link" %>
+          or
+          <%= f.submit question.option_2, class: "btn btn-link" %>
+        <% end %>
+
       <% end %>
 
     <% end %>
 
-  <% end %>
 
 
+      <!-- <%= link_to question.option_1, question_votes_path(question), value: 1, method: :create %>
+      or <%= link_to question.option_2, question_votes_path(question), value: 2, method: :create %> ? -->
 
-    <!-- <%= link_to question.option_1, question_votes_path(question), value: 1, method: :create %>
-    or <%= link_to question.option_2, question_votes_path(question), value: 2, method: :create %> ? -->
+    <% if current_user.try(:id) == question.user_id %>
+      <%= link_to "remove", question, method: :delete, data: {confirm: "Are you sure?"}, remote: true, class: "btn btn-danger btn-xs" %>
+    <% end %>
 
-  <% if current_user.try(:id) == question.user_id %>
-    <%= link_to "remove", question, method: :delete, data: {confirm: "Are you sure?"}, remote: true, class: "btn btn-danger btn-xs" %>
-  <% end %>
-
-  <div id="questionVotes">
-    <h4>Votes so far:</h4>
-    <% qo1c = question.option_1_count.to_f %>
-    <% qo2c = question.option_2_count.to_f %>
-    <% total = qo1c + qo2c %>
-    <% if total != 0 %>
-      <%= question.option_1 %>: <%= qo1c.to_i %> -- <%= ( (qo1c / total) * 100).round %> %<br>
-      <%= question.option_2 %>: <%= qo2c.to_i %> -- <%= ( (qo2c / total) * 100).round %> %
-    <% else %>
-      <h5>No votes yet on this topic.</h5>
+    <div id="questionVotes">
+      <h4>Votes so far:</h4>
+      <% qo1c = question.option_1_count.to_f %>
+      <% qo2c = question.option_2_count.to_f %>
+      <% total = qo1c + qo2c %>
+      <% if total != 0 %>
+        <%= question.option_1 %>: <%= qo1c.to_i %> -- <%= ( (qo1c / total) * 100).round %> %<br>
+        <%= question.option_2 %>: <%= qo2c.to_i %> -- <%= ( (qo2c / total) * 100).round %> %
+      <% else %>
+        <h5>No votes yet on this topic.</h5>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-sm-6" id="questions<%= question.id %>comments">
+    <%= link_to "Say Something", new_question_comment_path(question), id: "new_comment_link", remote: true %>
+    <% if question.comments.any? %>
+      <% question.comments.each do |comment| %>
+        <%= render comment %>
+      <% end %>
     <% end %>
   </div>
 </div>

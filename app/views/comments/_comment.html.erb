@@ -1,0 +1,10 @@
+<div id="comment<%= comment.id %>">
+  <span class="comment-header"> <%= comment.email %> says: </span>
+  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+  <%= link_to 'X', question_comment_path(comment.question_id, comment), method: :delete, data: {confirm: "Are you sure?"}, remote: true, class: "btn btn-danger btn-xs" %>
+
+
+  <div class="bubble left">
+    <%= comment.text %>
+  </div>
+</div>
