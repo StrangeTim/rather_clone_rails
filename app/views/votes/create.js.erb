@@ -1,2 +1,1 @@
-$('#question<%= @question.id  %>').remove();
-$('#all_questions').append('<%= j render @question %>');
+$('#question<%= @question.id  %>').html('<%= j render @question %>');
